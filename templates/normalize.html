@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en" >
+
+<head>
+  <meta charset="utf-8">
+  <!-- If you delete this meta tag World War Z will become a reality -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Normalize</title>
+
+  <!-- If you are using the CSS version, only link these 2 files, you may add app.css to use for your overrides if you like -->
+  <xlink rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="//cdn.foundation5.zurb.com/foundation.css">
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+</head>
+<body>
+
+  <div class="row">
+    <div class="columns medium-12">
+      <h1>Normalize</h1>
+
+      {% include "form.html" %}
+      {% include "form-result.html" %}
+      {% include "history.html" %}
+    </div>
+  </div>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="//cdn.foundation5.zurb.com/foundation.js"></script>
+  <script>
+    $(document).foundation();
+  </script>
+</body>
+</html>

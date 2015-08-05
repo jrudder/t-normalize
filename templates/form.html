@@ -1,0 +1,31 @@
+<h2>Lookup</h2>
+
+<form method="POST">
+  {% csrf_token %}
+
+  <!-- Component Parts -->
+  <div class="row">
+    <div class="medium-12 columns">
+      <label>Address
+        <input name="lines" type="text" placeholder="Address" value="{{ input.lines }}">
+      </label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="medium-4 columns">
+      <input name="city" type="text" placeholder="City" value="{{ input.city }}">
+    </div>
+    <div class="medium-4 columns">
+      <input name="state" type="text" placeholder="State" value="{{ input.state }}">
+    </div>
+    <div class="medium-4 columns">
+      <input name="postalCode" type="text" placeholder="Postal Code" value="{{ input.postalCode }}">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="columns">
+      <button type="submit">Normalize</button>
+    </div>
+  </div>
+</form>

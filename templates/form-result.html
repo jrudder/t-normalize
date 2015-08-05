@@ -1,0 +1,28 @@
+<h2>Results</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Provider</th>
+      <th>Line1</th>
+      <th>Line2</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Postal</th>
+    </tr>
+  </thead>
+
+  <tbody>
+{% for n in normals %}
+    <tr>
+      <td>{{n.provider}}</td>
+      <td>{{n.line1}}</td>
+      <td>{{n.line2}}</td>
+      <td>{{n.city}}</td>
+      <td>{{n.state}}</td>
+      <td>{{n.postalCode}}</td>
+    </tr>
+{% endfor %}
+  </tbody>
+
+</table>

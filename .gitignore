@@ -1,0 +1,17 @@
+# Misc
+.DS_Store
+
+# virtualenv
+.env
+
+# Compiled Python
+__pycache__
+
+# Input and output data
+*.json
+*.csv
+*.sqlite3
+
+# IDE
+.sublime-*
+

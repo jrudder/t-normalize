@@ -1,0 +1,77 @@
+<h2>History</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Provider</th>
+      <th>In Line1</th>
+      <th>In Line2</th>
+      <th>In City</th>
+      <th>In State</th>
+      <th>Out Line1</th>
+      <th>Out Line2</th>
+      <th>Out City</th>
+      <th>Out State</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for e in history %}
+    <tr>
+      <td>{{ e.provider }}</td>
+      <td>{{ e.in_line1 }}</td>
+      <td>{% if e.in_line2 != None %}{{ e.in_line2 }}{% endif %}</td>
+      <td>{{ e.in_city }}</td>
+      <td>{{ e.in_state }}</td>
+      <td>{{ e.out_line1 }}</td>
+      <td>{% if e.out_line2 != None %}{{ e.out_line2 }}{% endif %}</td>
+      <td>{{ e.out_city }}</td>
+      <td>{{ e.out_state }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="row">
+  <div class="column small-6">
+    <ul class="pagination">
+      {% if history.has_previous %}
+        <li class="arrow">
+          <a href="?page={{ history.previous_page_number }}">&laquo;</a>
+        </li>
+      {% else %}
+      <li class="arrow unavailable">
+          <a href="#">&laquo;</a>
+        </li>
+      {% endif %}
+
+      <!-- Page -->
+      {% for i in history.paginator.page_range %}
+        <li class="{% if i == history.number %}current{% endif %}"><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endfor %}
+
+      {% if history.has_next %}
+        <li class="arrow">
+          <a href="?page={{ history.next_page_number }}">&raquo;</a>
+        </li>
+      {% else %}
+      <li class="arrow unavailable">
+          <a href="#">&raquo;</a>
+        </li>
+      {% endif %}
+      <!--
+      <li class="current"><a href="?page=1">1</a></li>
+      <li><a href="?page=2">2</a></li>
+      <li><a href="">3</a></li>
+      <li><a href="">4</a></li>
+      <li class="unavailable"><a href="">&hellip;</a></li>
+      <li><a href="">12</a></li>
+      <li><a href="">13</a></li>
+      <li class="arrow"><a href="">&raquo;</a></li>
+      -->
+    </ul>
+  </div>
+  <div class="column small-6 text-right">
+    Page {{ history.number }} of {{ history.paginator.num_pages }}
+  </div>
+</div>
