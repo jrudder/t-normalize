@@ -42,7 +42,7 @@ def normalize(request):
   if request.method == "POST":
     # Get the normalizers
     normalizers = [
-      Normalizer.get("local"),
+      #Normalizer.get("local"),
       Normalizer.get("google"),
       Normalizer.get("usps", config=settings.PROVIDERS["usps"]),
       Normalizer.get("tam", config=settings.PROVIDERS["tam"]),
