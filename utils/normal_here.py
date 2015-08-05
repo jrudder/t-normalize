@@ -46,13 +46,17 @@ class NormalHere(Normalizer):
     query["searchtext"] = "{} {} {} {}".format(
       lines, city, state, postalCode)
 
-    response = requests.get(self.uri, data=query)
+    response = requests.get(self.uri, params=query)
 
     if response.status_code != 200:
       log.error("Failed to send request: {}\n{}".format(response.status_code, response.text))
       result = Normalizer.NORMALIZE_FAILED
     else:
-      result = self.__class__._parse(response.text)
+      try:
+        raw_text = json.dumps(json.loads(response.text), indent=4)
+      except:
+        raw_text = response.text
+      result = self.__class__._parse(raw_text)
 
     return result
 
@@ -61,14 +65,14 @@ class NormalHere(Normalizer):
     """ Parse the json text into a Normalizer.NormalizeResult """
     
     try:
-      data = json.loads(text)["StreetAddresses"][0]
+      data = json.loads(text)["Response"]["View"][0]["Result"][0]["Location"]["Address"]
       result = Normalizer.NormalizeResult(
           success    = True,
-          line1      = "{} {}".format(data["Number"], data["StreetName"]),
-          line2      = "{} {}".format(data["SuiteType"], data["SuiteNumber"]) if len(data["SuiteType"])>0 else None,
+          line1      = "{} {}".format(data["HouseNumber"], data["Street"]) if "HouseNumber" in data and "Street" in data else None,
+          line2      = None,
           city       = data.get("City", None),
           state      = data.get("State", None),
-          postalCode = data.get("ZIP", None),
+          postalCode = data.get("PostalCode", None),
           raw        = text)
     except:
       log.error("Failed to parse", exc_info=True)

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en" >
+
+<head>
+  <meta charset="utf-8">
+  <!-- If you delete this meta tag World War Z will become a reality -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Normalize</title>
+
+  <!-- If you are using the CSS version, only link these 2 files, you may add app.css to use for your overrides if you like -->
+  <xlink rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="//cdn.foundation5.zurb.com/foundation.css">
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+</head>
+<body>
+
+  <div class="row">
+    <div class="columns medium-12">
+      <h2>Lookup Details #{{ lookup.pk }}</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Provider</th>
+            <th>In Line1</th>
+            <th>In Line2</th>
+            <th>In City</th>
+            <th>In State</th>
+            <th>Out Line1</th>
+            <th>Out Line2</th>
+            <th>Out City</th>
+            <th>Out State</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>{{ lookup.provider }}</td>
+            <td>{{ lookup.in_line1 }}</td>
+            <td>{% if lookup.in_line2 != None %}{{ lookup.in_line2 }}{% endif %}</td>
+            <td>{{ lookup.in_city }}</td>
+            <td>{{ lookup.in_state }}</td>
+            <td>{{ lookup.out_line1 }}</td>
+            <td>{% if lookup.out_line2 != None %}{{ lookup.out_line2 }}{% endif %}</td>
+            <td>{{ lookup.out_city }}</td>
+            <td>{{ lookup.out_state }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <pre>{{ lookup.out_raw }}</pre>
+    </div>
+  </div>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="//cdn.foundation5.zurb.com/foundation.js"></script>
+  <script>
+    $(document).foundation();
+  </script>
+</body>
+</html>

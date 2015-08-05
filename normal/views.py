@@ -1,3 +1,5 @@
+# Python
+import logging
 # Django
 from django.shortcuts import render
 from django.template import Context
@@ -12,6 +14,9 @@ from utils.normal_local   import NormalLocal
 from utils.normal_google  import NormalGoogle
 from utils.normal_usps    import NormalUsps
 from utils.normal_tam     import NormalTam
+from utils.normal_here    import NormalHere
+
+log = logging.getLogger(__name__)
 
 def normalize(request):
   """
@@ -40,9 +45,10 @@ def normalize(request):
     # Get the normalizers
     normalizers = [
       #Normalizer.get("local"),
-      Normalizer.get("google"),
-      Normalizer.get("usps", config=settings.PROVIDERS["usps"]),
-      Normalizer.get("tam", config=settings.PROVIDERS["tam"]),
+      #Normalizer.get("google"),
+      #Normalizer.get("usps", config=settings.PROVIDERS["usps"]),
+      #Normalizer.get("tam", config=settings.PROVIDERS["tam"]),
+      Normalizer.get("here", config=settings.PROVIDERS["here"]),
     ]
 
     for normalizer in normalizers:
@@ -77,6 +83,11 @@ def normalize(request):
   ctx["history"] = history.page(page)
 
   return render(request, "normalize.html", ctx)
+
+def lookup_details(request, lookup_pk):
+  """ Show the lookup details page """
+  lookup = Lookup.objects.get(pk=lookup_pk)
+  return render(request, "lookup-details.html", {"lookup": lookup})
 
 def x_normalize(request):
   """

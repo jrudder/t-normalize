@@ -18,5 +18,6 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^normalize/', 'normal.views.normalize'),
+    url(r'^normalize/?', 'normal.views.normalize'),
+    url(r'^lookup/(?P<lookup_pk>[0-9]+)$', 'normal.views.lookup_details'),
 ]
