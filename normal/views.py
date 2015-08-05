@@ -15,6 +15,7 @@ from utils.normal_google  import NormalGoogle
 from utils.normal_usps    import NormalUsps
 from utils.normal_tam     import NormalTam
 from utils.normal_here    import NormalHere
+from utils.normal_yahoo   import NormalYahoo
 
 log = logging.getLogger(__name__)
 
@@ -45,10 +46,11 @@ def normalize(request):
     # Get the normalizers
     normalizers = [
       #Normalizer.get("local"),
-      #Normalizer.get("google"),
-      #Normalizer.get("usps", config=settings.PROVIDERS["usps"]),
-      #Normalizer.get("tam", config=settings.PROVIDERS["tam"]),
+      Normalizer.get("google"),
+      Normalizer.get("usps", config=settings.PROVIDERS["usps"]),
+      Normalizer.get("tam", config=settings.PROVIDERS["tam"]),
       Normalizer.get("here", config=settings.PROVIDERS["here"]),
+      Normalizer.get("yahoo", config=settings.PROVIDERS["yahoo"]),
     ]
 
     for normalizer in normalizers:
@@ -60,23 +62,28 @@ def normalize(request):
         state = state,
         postalCode = postalCode)
 
-      # Record the result
-      lookup = Lookup.objects.create(
-        provider = normalizer.name,
-        in_line1 = lines,
-        in_line2 = None,
-        in_city  = city,
-        in_state = state,
-        in_postalCode = postalCode,
-        out_line1 = result.line1,
-        out_line2 = result.line2,
-        out_city  = result.city,
-        out_state = result.state,
-        out_postalCode = result.postalCode,
-        out_raw = result.raw)
+      if result.success:
+        # Record the result
+        lookup = Lookup.objects.create(
+          provider = normalizer.name,
+          in_line1 = lines,
+          in_line2 = None,
+          in_city  = city,
+          in_state = state,
+          in_postalCode = postalCode,
+          out_line1 = result.line1,
+          out_line2 = result.line2,
+          out_city  = result.city,
+          out_state = result.state,
+          out_postalCode = result.postalCode,
+          out_raw = result.raw)
+        entry = lookup.out_dict
+        entry["success"] = True
+      else:
+        entry = {"provider": normalizer.name, "success": False}
 
       # Add to context
-      ctx["normals"].append(lookup.out_dict)
+      ctx["normals"].append(entry)
 
   # Add history
   history = Paginator(Lookup.objects.all().order_by("-pk"), 20)
