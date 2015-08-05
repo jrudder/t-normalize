@@ -25,9 +25,6 @@ def normalize(request):
   postalCode = request.POST.get("postalCode", "")
   page       = request.GET.get("page", 1)
 
-  # History
-  history = Paginator(Lookup.objects.all().order_by("-pk"), 20)
-
   # Create context
   ctx = {
     "input": {
@@ -36,7 +33,7 @@ def normalize(request):
       "state"      : state,
       "postalCode" : postalCode},
     "normals": [],
-    "history": history.page(page)
+    "history": None,
   }
 
   if request.method == "POST":
@@ -74,6 +71,10 @@ def normalize(request):
 
       # Add to context
       ctx["normals"].append(lookup.out_dict)
+
+  # Add history
+  history = Paginator(Lookup.objects.all().order_by("-pk"), 20)
+  ctx["history"] = history.page(page)
 
   return render(request, "normalize.html", ctx)
 
