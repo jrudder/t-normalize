@@ -1,5 +1,5 @@
 """
-Texas A&M Geoservices Normalizer
+Here Normalizer
 """
 # Python
 import logging
